@@ -1,15 +1,15 @@
-﻿using System;
-using System.Threading.Tasks;
-
+﻿
 namespace ConsoleApp5
 
- 
+
 
 {
     class Program
     {
-        static async Task Main(string[] args)
+        static void Main(string[] args)
         {
+            // Instance of the BackgroundOperation class
+            BackgroundOperation bgOperation = new BackgroundOperation();
             while (true)
             {
                 Console.WriteLine("Select an option:");
@@ -18,34 +18,39 @@ namespace ConsoleApp5
                 Console.WriteLine("3. Write OS Version");
                 Console.WriteLine("4. Exit");
 
-                var option = Console.ReadLine();
+                var choices = Console.ReadLine();
 
-                switch (option)
+                switch (choices)
                 {
                     case "1":
-                        await WriteToFileAsync("Hello World");
+                        var option1 = bgOperation.WriteToFileAsync(" Hello World ");
                         break;
                     case "2":
-                        await WriteToFileAsync(DateTime.Now.ToString("dd-MM-yyyy"));
+                        var option2 = bgOperation.WriteToFileAsync(DateTime.Now.ToString("dd-MM-yyyy"));
                         break;
                     case "3":
-                        await WriteToFileAsync(Environment.OSVersion.VersionString);
+                        var option3 = bgOperation.WriteToFileAsync(Environment.OSVersion.VersionString);
                         break;
                     case "4":
-                        Console.WriteLine("Exiting...");
+                        Console.WriteLine("Exiting Operations");
                         return;
                     default:
-                        Console.WriteLine("Invalid option selected.");
+                        Console.WriteLine("You have selected Invalid option.");
                         break;
                 }
             }
+            }
         }
-
-        private static async Task WriteToFileAsync(string message)
+        public class BackgroundOperation
+        {
+        public async Task WriteToFileAsync(string message)
         {
             await Task.Delay(3000); // Simulate some work
             await File.WriteAllTextAsync("tmp.txt", message);
         }
-    }
+        }
+      
+    
 }
+
 
